@@ -37,15 +37,15 @@ COPY app/ /tmp/build/app/
 COPY vendor/ /tmp/build/vendor/
 COPY gulpfile.js /tmp/build/
 
-ENV API_HOST topdeck.pro
+ENV API_HOST api.topdeck.pro
 RUN find . -name '*.swp' -delete \
     && . /root/.nvm/nvm.sh \
     && nvm use 0.11.14 \
     && ./node_modules/.bin/gulp prod \
     && mkdir -p /opt/app/ \
     && mv /tmp/build/public/ /opt/app/public/ \
-    && nginx -t
-    #&& rm -rf /tmp/build \
+    && nginx -t \
+    && rm -rf /tmp/build
 
 EXPOSE 80
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
