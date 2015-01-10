@@ -32,12 +32,13 @@ RUN . /root/.nvm/nvm.sh \
     && nvm use 0.11.14 \
     && npm install --loglevel error
 
-COPY app/ /tmp/build/app/
 COPY etc/ /etc/
+COPY app/ /tmp/build/app/
+COPY vendor/ /tmp/build/vendor/
 COPY gulpfile.js /tmp/build/
 
+ENV API_HOST topdeck.pro
 RUN find . -name '*.swp' -delete \
-    && API_HOST=topdeck.pro \
     && . /root/.nvm/nvm.sh \
     && nvm use 0.11.14 \
     && ./node_modules/.bin/gulp prod \
